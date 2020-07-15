@@ -2,15 +2,15 @@
 
 In the project directory, first run:
 
-`make build`
+### `make build`
 
 Then for a production-like server, try:
 
-`make prod`
+### `make prod`
 
 Else:
 
-`make dev`
+### `make dev`
 
 ***
 
