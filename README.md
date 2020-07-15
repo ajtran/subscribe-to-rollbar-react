@@ -2,7 +2,7 @@
 
 In the project directory, first run:
 
-### `make build`
+### `make npm`
 
 Then for a production-like server, try:
 
