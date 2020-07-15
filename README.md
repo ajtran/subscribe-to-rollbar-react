@@ -1,3 +1,19 @@
+## To get started
+
+In the project directory, first run:
+
+`make build`
+
+Then for a production-like server, try:
+
+`make prod`
+
+Else:
+
+`make dev`
+
+***
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
