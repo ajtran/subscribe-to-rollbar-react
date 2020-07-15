@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Keep up with Rollbar!</h1>
+        <h1>Stay connected with Rollbar!</h1>
         <div className="App">
           <SubscriberForm />
         </div>

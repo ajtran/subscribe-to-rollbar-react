@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import './SubscriberForm.css'
+import './SubscriberForm.css';
 
-
-const NUMS = '1234567890';
 
 class SubscriberForm extends Component {
   constructor(props) {
@@ -18,96 +16,87 @@ class SubscriberForm extends Component {
     };
   }
 
-  isValidName(id, value) {
-    if (value.length === 0) {
-      this.setState({ errors: { [id]: 'Name is required.' } });
-      return false;
+  validateFirstName = () => {
+    const { firstName } = this.state;
+
+    if (firstName.length === 0) {
+      return { valid: false, message: 'First name is required.' };
     }
 
-    for (let i = 0; i < value.length; i++) {
-      if (NUMS.indexOf(value.charAt(i)) !== -1) {
-        this.setState({ errors: { [id]: 'Name cannot contain numbers.' } });
-        return false;
-      }
-    }
-    return true;
+    return { valid: true };
   }
 
-  validateNumber(number) {
-    if (number.length === 0) {
-      this.setState({ errors: { number: 'Phone Number is required.' } });
-      return false;
-    }
+  validateLastName = () => {
+    const { lastName } = this.state;
 
-    for (let i = 0; i < number.length; i++) {
-      if (NUMS.indexOf(number.charAt(i)) === -1) {
-        this.setState({ errors: { number: 'Phone Numbers can only contain numbers.' } });
-        return false;
-      }
-    }
-
-    if (number.length !== 10) {
-      this.setState({ errors: { number: 'Phone Numbers must be 10 digits.' } });
-      return false
-    }
-
-    return true;
+    return { valid: true };
   }
 
-  validateEmail(email) {
-    if (email.length === 0) {
-      this.setState({ errors: { email: 'Email is required.' } });
-      return false;
-    }
+  validateNumber() {
+    const { number } = this.state;
 
-    if (email.indexOf('@') === -1) {
-      this.setState({ errors: { email: 'Email must contain @.' } });
-      return false;
-    }
-
-    if (email.indexOf('@') === 0) {
-      this.setState({ errors: { email: 'Email must not start with @.' } });
-      return false
-    }
-
-    return true;
+    return { valid: true };
   }
 
-  isValidState = () => {
-    const {
-      firstName,
-      lastName,
-      number,
-      email,
-    } = this.state;
+  validateEmail() {
+    const { email } = this.state;
 
-    return (
-      this.isValidName('firstName', firstName) &&
-      this.isValidName('lastName', lastName) &&
-      this.validateNumber(number) &&
-      this.validateEmail(email)
-    );
+    return { valid: true };
+  }
+
+  validateForm = () => {
+    const errors = {};
+
+    const firstNameRes = this.validateFirstName()
+    if (!firstNameRes.valid) {
+      errors.firstName = firstNameRes.message;
+    }
+
+    const lastNameRes = this.validateLastName()
+    if (!lastNameRes.valid) {
+      errors.lastName = lastNameRes.message;
+    }
+
+    const numberRes = this.validateNumber()
+    if (!numberRes.valid) {
+      errors.number = numberRes.message;
+    }
+
+    const emailRes = this.validateEmail()
+    if (!emailRes.valid) {
+      errors.email = emailRes.message;
+    }
+
+    return errors;
   }
 
   submitForm = (event) => {
     event.preventDefault();
 
-    if (this.isValidState()) {
+    const errors = this.validateForm();
+    if (Object.keys(errors).length === 0) {
       this.setState({ submitted: true });
+    } else {
+      this.setState({ errors });
     }
   }
 
   handleChange = ({ target: { id, value } }) => {
+    const { errors } = this.state;
+
     this.setState({
       [id]: value,
-      errors: {},
+      errors: {
+        ...errors,
+        [id]: '',
+      },
     });
   }
 
-  renderSuccess() {
+  renderSuccessMessage() {
     return (
       <div>
-        Thanks for subscribing!
+        Thanks for subscribing
       </div>
     )
   }
