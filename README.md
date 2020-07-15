@@ -1,4 +1,4 @@
-## To get started
+## To Get Started
 
 In the project directory, first run:
 
